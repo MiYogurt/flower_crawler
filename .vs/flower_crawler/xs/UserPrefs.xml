@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{7106CFF9-AFA5-4B33-BA1C-9FA36629A458}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="flower_crawler/Lib.fs">
+    <Files>
+      <File FileName="flower_crawler/Program.fs" Line="12" Column="19" />
+      <File FileName="flower_crawler/DebugHelper.fs" Line="7" Column="29" />
+      <File FileName="flower_crawler/Lib.fs" Line="44" Column="12" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="flower_crawler" expanded="True">
+            <Node name="flower_crawler" expanded="True" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.flower__crawler PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
