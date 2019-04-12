@@ -3,29 +3,31 @@
 open FSharp.Data.Sql
 open System.Collections.Generic
 open Model
+open System
 
-let [<Literal>] connString = "Host=localhost;Database=test_db;Username=yugo;Password=yugo"
+let [<Literal>] connString = "Host=localhost;Database=test_db;Username=bob;Password=bob"
 
 let [<Literal>] dbVendor = Common.DatabaseProviderTypes.POSTGRESQL
 
-type sql = SqlDataProvider<dbVendor,connString, "">
+type sql = SqlDataProvider<dbVendor,connString, "", "./libs" >
 
-let ctx = sql.GetDataContext()
+let runtimeConnectionStr = connString
+
+let ctx = sql.GetDataContext(runtimeConnectionStr)
 
 let Goods = ctx.Public.Goods
 
 let Categorys = ctx.Public.Categorys
 
-
 let saveCategorys (list: IEnumerable<string>) : unit = 
-    Seq.map (fun text -> 
+    Seq.iter (fun (text: string) -> 
         let cate = Categorys.Create()
         cate.Name <- text
-    ) list |> ignore
+    ) list
     ctx.SubmitUpdates()
 
 let saveGoods (list: IEnumerable<Good>) : unit = 
-    Seq.map (fun model -> 
+    Seq.iter (fun model -> 
         let goods = Goods.Create()
         goods.Title <- model.Title
         goods.Src <- model.Src
