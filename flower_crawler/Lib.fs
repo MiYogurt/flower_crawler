@@ -1,6 +1,10 @@
 ﻿module Lib
 
+open System
 open DebugHelper
+open Model
+open DB
+open Base
 open HtmlAgilityPack
 open Fizzler.Systems.HtmlAgilityPack
 open System.Net.Http
@@ -23,30 +27,46 @@ let getCategorys =
     async {
         let! doc = getDoc "https://www.hua.com/"
         let aList = doc.QuerySelectorAll(".cate-list a") |> getText
-        print aList
+        aList |> saveCategorys
     }
 
-type Good = 
-    {
-       Title: string
-       Src: string
-       Description: string
-    }
 
-let getGood (item: HtmlNode) : Good = 
+
+let getGoodLink (item: HtmlNode) : string = 
+    "https://www.hua.com/aiqingxianhua" + item.Attributes.["herf"].Value
+
+let getAttr (name: string) (item: HtmlNode) : string = 
+    item.Attributes.[name].Value
+
+let joinSrc (list: IEnumerable<string>) : string = 
+    let mutable str = ""
+    for s in list do
+        str <- str + "," + s
+    str
+
+let getSrc = getAttr "src"    
+
+let getGoodsModel (item: HtmlNode): Good = 
     {
         Title = item.QuerySelector(".product-title").InnerText
-        Src = item.QuerySelector(".img-box img").Attributes.["src"].Value
-        Description = item.QuerySelector(".feature").InnerText
+        Content = item.QuerySelector("#Details").InnerHtml
+        Price = item.QuerySelector(".price-sell .price-num").InnerText |> System.Double.Parse
+        Src = item.QuerySelectorAll(".swiperController img") ||> getSrc |> joinSrc
+        Description = item.QuerySelector(".title ~ .attribute").ChildNodes.[4].QuerySelector("dd").InnerText
     }
 
-let getGodos = 
+let getGoods = 
     async {
-        let! doc = getDoc "https://www.hua.com/flower/?r=0&pg=1"
-        let goodsDom = doc.QuerySelectorAll(".grid-wrapper .grid-item")
-        let goods = goodsDom |> Seq.map getGood
-
-        goods |> Seq.map (fun (g: Good) -> g.Title + " --- >"+g.Src) |> print
+        let! doc = getDoc "https://www.hua.com/aiqingxianhua"
+        let goodsDom = doc.QuerySelectorAll ".grid-wrapper .grid-item a"
+        goodsDom 
+            ||> getGoodLink 
+            ||> getDoc
+            |> Async.Parallel
+            |> Async.RunSynchronously
+            ||> getGoodsModel
+            |> saveGoods
+            |> ignore
 
         ()
     }
