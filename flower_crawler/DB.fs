@@ -4,7 +4,7 @@ open FSharp.Data.Sql
 open System.Collections.Generic
 open Model
 
-let [<Literal>] connString = "Host=localhost;Database=test_db;Username=postgres;Password=postgres"
+let [<Literal>] connString = "Host=localhost;Database=test_db;Username=yugo;Password=yugo"
 
 let [<Literal>] dbVendor = Common.DatabaseProviderTypes.POSTGRESQL
 
