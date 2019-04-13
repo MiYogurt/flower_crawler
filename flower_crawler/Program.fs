@@ -10,9 +10,9 @@ open System
 let main argv =
     //[getCategorys; getGoods] 
     //[getCategorys] 
-    [getGoods] 
+    //[getGoods] 
+    [getSubjects] 
     |> Async.Parallel
     |> Async.RunSynchronously 
     |> ignore
-    //saveCategorys [| "text"; "222" |]
     0 

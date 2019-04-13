@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{7106CFF9-AFA5-4B33-BA1C-9FA36629A458}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="flower_crawler/Lib.fs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="flower_crawler/Program.fs" Line="13" Column="1" />
       <File FileName="flower_crawler/DebugHelper.fs" Line="8" Column="1" />
-      <File FileName="flower_crawler/Lib.fs" Line="77" Column="35" />
+      <File FileName="flower_crawler/Lib.fs" Line="89" Column="22" />
       <File FileName="flower_crawler/Model.fs" Line="5" Column="18" />
-      <File FileName="flower_crawler/DB.fs" Line="35" Column="39" />
+      <File FileName="flower_crawler/DB.fs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

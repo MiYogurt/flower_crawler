@@ -9,3 +9,10 @@ type Good =
        Price: float
        Type: string
     }
+
+type Subject = 
+    {
+       Title: string
+       Src: string
+       Content: string
+    }

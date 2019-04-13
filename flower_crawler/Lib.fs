@@ -9,6 +9,8 @@ open HtmlAgilityPack
 open Fizzler.Systems.HtmlAgilityPack
 open System.Net.Http
 open System.Collections.Generic
+open FSharp.Data.JsonProvider
+open System.Collections.Generic
 
 let getText : (IEnumerable<HtmlNode> -> IEnumerable<string>) = Seq.map (fun (node: HtmlNode) -> node.InnerText)
 
@@ -72,3 +74,30 @@ let getGoods =
         let! docs = goodsDom ||> getGoodLink ||> getDoc |> Async.Parallel
         docs ||> getGoodsModel |> saveGoods |> ignore
     }
+
+type WebType = JsonProvider<"https://www.gaoding.com/api/templets?page_size=9&page_num=1&platform_id=64&category_id=128">
+
+let getSrcs = 
+    async {
+        let data = WebType.GetSample()
+        let urls = Seq.map (fun (x: WebType.Root) -> x.Preview.Url) data
+        return urls
+    }
+
+
+let getSubject (srcs: seq<string>) (x: HtmlNode): Subject = 
+    let index = rn.Next() % 7 + 1
+    {
+        Title = x.QuerySelector(".title h4").InnerText
+        Src = Seq.item index srcs
+        Content = x.QuerySelector(".article").InnerText
+    }
+
+let getSubjects = 
+    async {
+        let! doc = getDoc "https://www.hua.com/huayu/story.html"
+        let subjectsLinks = doc.QuerySelectorAll ".Item_Title a" ||> getAttr "href" ||> (fun x -> "https://www.hua.com" + x)
+        let! docs = subjectsLinks ||> getDoc |> Async.Parallel
+        let! srcs = getSrcs
+        docs ||> getSubject srcs |> saveSubjects
+    } 

@@ -19,6 +19,9 @@ let Goods = ctx.Public.Goods
 
 let Categorys = ctx.Public.Categorys
 
+let Subjects = ctx.Public.Subjects
+
+
 let saveCategorys (list: IEnumerable<string>) : unit = 
     Seq.iter (fun (text: string) -> 
         let cate = Categorys.Create()
@@ -27,7 +30,7 @@ let saveCategorys (list: IEnumerable<string>) : unit =
     ctx.SubmitUpdates()
 
 let saveGoods (list: IEnumerable<Good>) : unit = 
-    Seq.iter (fun model -> 
+    Seq.iter (fun (model: Good) -> 
         let goods = Goods.Create()
         goods.Title <- model.Title
         goods.Src <- model.Src
@@ -36,5 +39,14 @@ let saveGoods (list: IEnumerable<Good>) : unit =
         goods.Price <- model.Price
         goods.Type <- model.Type
         goods.CategoryId <- 2
+    ) list |> ignore
+    ctx.SubmitUpdates()
+
+let saveSubjects (list: IEnumerable<Subject>) : unit = 
+    Seq.iter (fun (model: Subject) -> 
+        let subj = Subjects.Create()
+        subj.Title <- model.Title
+        subj.Src <- model.Src
+        subj.Content <- model.Content
     ) list |> ignore
     ctx.SubmitUpdates()
