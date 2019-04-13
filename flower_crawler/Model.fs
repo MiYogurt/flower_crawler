@@ -7,4 +7,5 @@ type Good =
        Description: string
        Content: string
        Price: float
+       Type: string
     }

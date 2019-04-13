@@ -34,5 +34,7 @@ let saveGoods (list: IEnumerable<Good>) : unit =
         goods.Desc <- model.Description
         goods.Content <- model.Content
         goods.Price <- model.Price
+        goods.Type <- model.Type
+        goods.CategoryId <- 2
     ) list |> ignore
     ctx.SubmitUpdates()

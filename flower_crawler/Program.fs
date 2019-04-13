@@ -9,8 +9,8 @@ open System
 [<EntryPoint>]
 let main argv =
     //[getCategorys; getGoods] 
-    [getCategorys] 
-    //[getGoods] 
+    //[getCategorys] 
+    [getGoods] 
     |> Async.Parallel
     |> Async.RunSynchronously 
     |> ignore
